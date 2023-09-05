@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:dynamic",
+          "name": "prizemachines:equipment"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "prizemachines:prizes/equipment_prize_machine"
+}

@@ -1,0 +1,8 @@
+{
+  "block.prizemachines.awarded_prize": {
+    "sounds": [
+      "random/orb"
+    ],
+    "subtitle": "block.prizemachines.awarded_prize"
+  }
+}

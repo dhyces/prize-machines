@@ -1,0 +1,7 @@
+// 1.20.1	2023-09-05T12:28:55.5053565	Loot Tables
+2792cb02ce1ab7862760a5900888d62db0f7fa72 data/prizemachines/loot_tables/blocks/block_prize_machine.json
+945ab0c1bc22fb8cf2d2a8435a69b983d4a7ec04 data/prizemachines/loot_tables/blocks/equipment_prize_machine.json
+7fae83c3afa4694f9015f9e39b74326048b1e0f6 data/prizemachines/loot_tables/prizes/block_prize_machine.json
+ea49597487fd69652b8c8d98f184be3845815e7b data/prizemachines/loot_tables/prizes/common_prize_tokens.json
+778b5f643982a6ec7ee12b945e14408005c614e8 data/prizemachines/loot_tables/prizes/equipment_prize_machine.json
+aea4b4f788bbdf68b5bff0c2178b2dc40f95ad30 data/prizemachines/loot_tables/prizes/uncommon_prize_tokens.json

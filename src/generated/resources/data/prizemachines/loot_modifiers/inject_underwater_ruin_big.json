@@ -1,0 +1,10 @@
+{
+  "type": "prizemachines:loot_table_inject",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/underwater_ruin_big"
+    }
+  ],
+  "loot_table": "prizemachines:common_prize_tokens"
+}

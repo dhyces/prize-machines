@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:block/block",
+  "children": {
+    "lower": {
+      "parent": "prizemachines:block/block_prize_machine_lower"
+    },
+    "upper": {
+      "parent": "prizemachines:block/block_prize_machine_upper",
+      "render_type": "minecraft:cutout",
+      "transform": {
+        "translation": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "translation": [
+        0,
+        -3,
+        0
+      ]
+    }
+  },
+  "item_render_order": [
+    "upper",
+    "lower"
+  ],
+  "loader": "forge:composite"
+}

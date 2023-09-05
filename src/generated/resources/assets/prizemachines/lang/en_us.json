@@ -1,0 +1,8 @@
+{
+  "block.prizemachines.awarded_prize": "Prize machine dings",
+  "block.prizemachines.block_prize_machine": "Block Prize Machine",
+  "block.prizemachines.equipment_prize_machine": "Equipment Prize Machine",
+  "info.prizemachines.awarded": "Congratulations! You won a %s!",
+  "item.prizemachines.prize_token": "Prize Token",
+  "itemGroup.prizemachines.prize_machines": "Prize Machines"
+}

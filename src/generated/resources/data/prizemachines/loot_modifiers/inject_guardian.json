@@ -1,0 +1,10 @@
+{
+  "type": "prizemachines:loot_table_inject",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/guardian"
+    }
+  ],
+  "loot_table": "prizemachines:uncommon_prize_tokens"
+}

@@ -2,7 +2,7 @@ package dev.dhyces.prizemachines.registry;
 
 import com.mojang.serialization.Codec;
 import dev.dhyces.prizemachines.PrizeMachines;
-import dev.dhyces.prizemachines.lootmodifiers.LootTableLootModifier;
+import dev.dhyces.prizemachines.loot.modifiers.LootTableLootModifier;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

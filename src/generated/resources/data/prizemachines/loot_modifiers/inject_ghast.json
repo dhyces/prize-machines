@@ -6,5 +6,5 @@
       "loot_table_id": "minecraft:entities/ghast"
     }
   ],
-  "loot_table": "prizemachines:uncommon_prize_tokens"
+  "loot_table": "prizemachines:injected/uncommon_prize_tokens"
 }

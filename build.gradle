@@ -81,6 +81,8 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+jarJar.enable()
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 

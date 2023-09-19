@@ -21,6 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -92,6 +94,7 @@ public class PrizeMachineBlock extends Block {
             MinecraftServer server = serverLevel.getServer();
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(this);
             ResourceLocation lootTableId = PrizeMachines.MOD_RL.withPath("prizes/" + id.getPath());
+
             LootTable prizeTable = server.getLootData().getLootTable(lootTableId);
             LootParams lootParams = new LootParams.Builder(serverLevel)
                     .withParameter(LootContextParams.BLOCK_STATE, pState)
@@ -100,15 +103,16 @@ public class PrizeMachineBlock extends Block {
                     .withParameter(LootContextParams.THIS_ENTITY, pPlayer)
                     .withDynamicDrop(EQUIPMENT_DROP, pOutput -> {
                         Optional<ItemStack> stackOptional;
-                        while ((stackOptional = getRandomAllowedItem(serverLevel.getRandomSequence(lootTableId), item -> !(item instanceof BlockItem))).isEmpty()) {}
+                        while ((stackOptional = getRandomAllowedItem(serverLevel.enabledFeatures(), serverLevel.getRandomSequence(lootTableId), item -> !(item instanceof BlockItem))).isEmpty());
                         pOutput.accept(stackOptional.get());
                     })
                     .withDynamicDrop(BLOCK_DROP, pOutput -> {
                         Optional<ItemStack> stackOptional;
-                        while ((stackOptional = getRandomAllowedItem(serverLevel.getRandomSequence(lootTableId), item -> item instanceof BlockItem)).isEmpty()) {}
+                        while ((stackOptional = getRandomAllowedItem(serverLevel.enabledFeatures(), serverLevel.getRandomSequence(lootTableId), item -> item instanceof BlockItem)).isEmpty());
                         pOutput.accept(stackOptional.get());
                     })
                     .create(LootContextParamSets.BLOCK);
+
             prizeTable.getRandomItems(new LootContext.Builder(lootParams).create(lootTableId), stack -> {
                 pPlayer.sendSystemMessage(Component.translatable("info.prizemachines.awarded", Component.empty().append(stack.getDisplayName()).withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(stack))))));
                 if (!pPlayer.getInventory().add(stack)) {
@@ -122,7 +126,9 @@ public class PrizeMachineBlock extends Block {
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
         super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
+
         BlockPos abovePos = pPos.above();
+
         if (pState.getValue(DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER) {
             pLevel.setBlock(abovePos, pState.setValue(DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER), Block.UPDATE_ALL);
         }
@@ -131,7 +137,9 @@ public class PrizeMachineBlock extends Block {
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+
         BlockPos toRemove = pState.getValue(DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER ? pPos.above() : pPos.below();
+
         if (pLevel.getBlockState(toRemove).is(this)) {
             pLevel.setBlock(toRemove, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
         }
@@ -141,6 +149,7 @@ public class PrizeMachineBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         BlockPos placePos = pContext.replacingClickedOnBlock() ? pContext.getClickedPos() : pContext.getClickedPos().relative(pContext.getHorizontalDirection().getOpposite());
+
         if (!pContext.getLevel().getBlockState(placePos.above()).canBeReplaced()) {
             return null;
         }
@@ -156,17 +165,33 @@ public class PrizeMachineBlock extends Block {
     }
 
     @Override
-    public BlockState rotate(BlockState state, LevelAccessor level, BlockPos pos, Rotation direction) {
-        return state.setValue(FACING, direction.rotate(state.getValue(FACING)));
+    public BlockState rotate(BlockState pState, Rotation pRotation) {
+        return pState.setValue(FACING, pRotation.rotate(pState.getValue(FACING)));
     }
 
-    protected Optional<ItemStack> getRandomAllowedItem(RandomSource randomSource, Predicate<Item> itemPredicate) {
+    protected Optional<ItemStack> getRandomAllowedItem(FeatureFlagSet enabledFlagSet, RandomSource randomSource, Predicate<Item> itemPredicate) {
         return BuiltInRegistries.ITEM.getRandom(randomSource)
                 .filter(itemReference -> !itemReference.is(ItemRegistry.PRIZE_BLACKLIST))
                 .map(Holder::get)
+                .filter(item -> item.isEnabled(enabledFlagSet))
                 .filter(itemPredicate)
-                .map(ItemStack::new)
-                .filter(Config::isItemAllowed);
+                .map(ItemStack::new);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        if ((isUpperHalf(pState) && !pLevel.getBlockState(pPos.below()).is(this))) {
+            return false;
+        }
+        return super.canSurvive(pState, pLevel, pPos);
+    }
+
+    public boolean isLowerHalf(BlockState state) {
+        return state.getValue(DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER;
+    }
+
+    public boolean isUpperHalf(BlockState state) {
+        return state.getValue(DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER;
     }
 
     @Override

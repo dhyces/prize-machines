@@ -6,9 +6,41 @@
       "entries": [
         {
           "type": "minecraft:dynamic",
-          "name": "prizemachines:equipment"
+          "name": "prizemachines:equipment",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "prizemachines:prizes/items_with_potions"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "prizemachines:prizes/fireworks"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "prizemachines:prizes/maps"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "prizemachines:set_random_firework_star"
+            }
+          ],
+          "name": "minecraft:firework_star"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "minecraft:book"
         }
       ],
+      "name": "base_pool",
       "rolls": 1.0
     }
   ],

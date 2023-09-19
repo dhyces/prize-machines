@@ -5,6 +5,9 @@
 		"machine",
 		"glass"
 	],
+	"textures": {
+		"particle": "prizemachines:block/block_prize_machine"
+	},
 	"children": {
 		"glass": {
 			"parent": "prizemachines:block/prize_machine_glass",

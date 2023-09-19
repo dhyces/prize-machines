@@ -3,6 +3,7 @@ package dev.dhyces.prizemachines;
 import dev.dhyces.prizemachines.registry.BlockRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -18,5 +19,11 @@ public class ModBlockTagGen extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(BlockRegistry.PRIZE_MACHINES)
                 .add(BlockRegistry.EQUIPMENT_PRIZE_MACHINE.get(), BlockRegistry.BLOCK_PRIZE_MACHINE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .addTag(BlockRegistry.PRIZE_MACHINES);
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .addTag(BlockRegistry.PRIZE_MACHINES);
+        tag(BlockTags.FEATURES_CANNOT_REPLACE)
+                .addTag(BlockRegistry.PRIZE_MACHINES);
     }
 }

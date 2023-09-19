@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "prizemachines.refmap.json",
   "mixins": [
-    "MonsterRoomFeatureMixin"
+    "MonsterRoomFeatureMixin",
+    "StructureTemplatePoolAccessor"
   ],
   "client": [
   ],

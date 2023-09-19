@@ -7,22 +7,26 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class Config {
 
-    private static ForgeConfigSpec.BooleanValue blockCreativeItems;
+    private static ForgeConfigSpec.BooleanValue dungeonsHavePrizeMachines;
+    private static ForgeConfigSpec.DoubleValue prizeMachineDungeonChance;
 
-    public static ForgeConfigSpec buildSpec() {
+    public static ForgeConfigSpec buildServerSpec() {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
         builder.push("Server");
-        blockCreativeItems = builder.comment("Blocks all items which appear in the Operator Blocks creative mode tab. Default: true")
-                .define("blockCreativeItems", true);
+        dungeonsHavePrizeMachines = builder.comment("Determines whether prize machines attempt to generate in dungeons. Default: true")
+                .define("dungeonsHavePrizeMachines", true);
+        prizeMachineDungeonChance = builder.comment("Chance of a prize machine being placed for any spot against a cobblestone wall in a dungeon. Default: 0.25")
+                .defineInRange("prizeMachineDungeonChance", 0.25, 0, 1);
 
         return builder.build();
     }
 
-    public static boolean isItemAllowed(ItemStack stack) {
-        if (Config.blockCreativeItems.get()) {
-            return !BuiltInRegistries.CREATIVE_MODE_TAB.get(CreativeModeTabs.OP_BLOCKS).contains(stack);
-        }
-        return true;
+    public static boolean dungeonPrizeMachines() {
+        return dungeonsHavePrizeMachines.get();
+    }
+
+    public static float dungeonPrizeMachineChance() {
+        return prizeMachineDungeonChance.get().floatValue();
     }
 }

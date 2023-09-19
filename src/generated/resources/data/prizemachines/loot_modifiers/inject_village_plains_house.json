@@ -6,5 +6,5 @@
       "loot_table_id": "minecraft:chests/village/village_plains_house"
     }
   ],
-  "loot_table": "prizemachines:common_prize_tokens"
+  "loot_table": "prizemachines:injected/common_prize_tokens"
 }

@@ -10,7 +10,12 @@ import java.util.function.BiConsumer;
 
 public abstract class AbstractLootTableSubProvider implements LootTableSubProvider {
 
+    protected final String prefix;
     protected final Map<ResourceLocation, LootTable.Builder> map = new HashMap<>();
+
+    public AbstractLootTableSubProvider(String prefix) {
+        this.prefix = prefix;
+    }
 
     protected abstract void generate();
 
@@ -21,6 +26,6 @@ public abstract class AbstractLootTableSubProvider implements LootTableSubProvid
     }
 
     protected void add(ResourceLocation tableId, LootTable.Builder builder) {
-        map.put(tableId.withPrefix("prizes/"), builder);
+        map.put(tableId.withPrefix(prefix + "/"), builder);
     }
 }

@@ -1,2 +1,5 @@
-// 1.20.1	2023-09-04T20:59:25.5545798	Tags for minecraft:block mod id prizemachines
+// 1.20.1	2023-09-08T23:42:33.6929368	Tags for minecraft:block mod id prizemachines
+e16a77367df5d8ded12ea27dab8355b592480068 data/minecraft/tags/blocks/features_cannot_replace.json
+e16a77367df5d8ded12ea27dab8355b592480068 data/minecraft/tags/blocks/mineable/pickaxe.json
+e16a77367df5d8ded12ea27dab8355b592480068 data/minecraft/tags/blocks/needs_stone_tool.json
 e5915ee6bd70d02aa3b7244ba18454924c7b80f3 data/prizemachines/tags/blocks/prize_machines.json
